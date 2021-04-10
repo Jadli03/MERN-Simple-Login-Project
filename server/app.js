@@ -1,30 +1,22 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require("express");
+require("./db/connection");
+const route = require("./routes/auth");
 
 const app = express();
 
 
 //middleware 
-const middleware = (req,res,next) => {
-    console.log("middleware");
-    next();
-}
+app.use(express.json());
+app.use(route);
 
  
 //routes
-app.get("/",(req,res) => {
-    res.send("hello from the server");
-})
 
-app.get("/profile",middleware,(req,res) => {
-    res.send("hello profile page");
-})
-app.get("/login",(req,res) => {
-    res.send("hello login page");
-})
-app.get("/signup",(req,res) => {
-    res.send("hello signup page");
-})
 
-app.listen(8000, () => {
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
     console.log("listenin to port 8000");
 })
